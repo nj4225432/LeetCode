@@ -22,5 +22,5 @@ class Solution:
                 l2 = l2.next
             carry, x = divmod(carry, 10) 
             n.next = ListNode(x) 
-            n = n.next
+            n = n.next  # 此处也可以用n.next = n = ListNode(x) 但是万不可以 n = n.next = ListNode(x)            
         return root.next # 只需要指向表头就行
