@@ -1,0 +1,20 @@
+# 完全不会，初始还想将其转码
+#本题最重要的技巧为stack，stack在Python里的思维就是list中的append()和pop()，其次为dict的精妙应用，与第1题有异曲同工之妙，values()与keys()的精妙转换
+
+class Solution:
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        stack = []
+        char = {'}':'{', ']':'[', ')':'('}
+        for x in s:
+            if x in char.values():
+                stack.append(x)
+            elif x in char.keys():
+                if stack == [] or char[x] != stack.pop():
+                    return False
+            else:
+                return False
+        return stack == []
