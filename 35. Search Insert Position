@@ -1,0 +1,42 @@
+#1 My own way (wrong)  想使用二分法
+class Solution:
+    def searchInsert(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        left = 0
+        right = len(nums) - 1
+        if target > nums[right]:
+            r = right + 1
+            return r
+        elif target < nums[left]:
+            return 0
+        while left < right:
+            if target == nums[left]:
+                r = left
+                return r
+            elif target == nums[right]:
+                r = right
+                return r
+            elif target < nums[(right+left)//2]:
+                right = (right+left)//2
+                left += 1
+            elif target > nums[(right+left)//2]:
+                left = (right+left)//2
+                right -= 1
+            elif target == nums[(right+left)//2]:
+                r = (right+left)//2
+                return r
+        r = left 
+        return r
+
+#2 代码最简洁，但不是最快的方法
+for i in nums:
+    if target <= i:
+        return nums.index(i)
+return len(nums)
+        
+#3 奇淫巧技
+return len([x for x in nums if x<target])
