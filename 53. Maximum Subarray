@@ -9,7 +9,7 @@ class Solution:
 
         curSum = maxSum = A[0]
         for num in A[1:]:
-            curSum = max(num, curSum + num) # 判断前面的数是否对后面有贡献，动态判断语句
-            maxSum = max(maxSum, curSum) # 保留语句
+            curSum = max(num, curSum + num) # 判断前面的数是否对后面有贡献，动态判断语句; 记贡献    
+            maxSum = max(maxSum, curSum) # 保留语句 ； 记自己
 
         return maxSum
