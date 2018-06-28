@@ -1,0 +1,45 @@
+ # 1 My own way (wrong)
+ # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def isSameTree(self, p, q):
+        """
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: bool
+        """
+        def transfer(TreeNode):
+            x = []
+            if TreeNode == None:
+                x.append('null')
+                return x
+            else:
+                x.append(TreeNode.val)
+            if TreeNode.left == None:
+                x.append('null')
+            else:
+                x.append(TreeNode.left.val)
+            if TreeNode.right == None:
+                x.append('null')
+            else:
+                x.append(TreeNode.right.val) 
+            return x
+        if transfer(p) == transfer(q):
+            return True
+        return False
+        
+ # 2 奇淫技巧   the proper way
+ def isSameTree(self, p, q):
+    if p and q: # 此种判断是否为None 法在链表里面也有使用
+        return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)  # 用到了迭代，注意此处self
+    return p is q
+ # 3  the tupleify way
+def isSameTree(self, p, q):
+    def t(n):
+        return n and (n.val, t(n.left), t(n.right))  # 同样用到迭代
+    return t(p) == t(q)
