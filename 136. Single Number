@@ -1,0 +1,17 @@
+# 自己的方法  非常费时  主要思想是一个元素一个元素的看
+class Solution:
+    def singleNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        stock = []
+        for i in nums:
+            if i not in stock:
+                stock.append(i) 
+            else:
+                stock.remove(i)
+        return stock[0]
+       
+# 2 一行代码的奇淫技巧   直接用的set+数学方法
+return 2 * sum(set(nums)) - sum(nums)
