@@ -18,3 +18,26 @@ class Solution:
             else:
                 return False
         return stack == []
+
+# 2 自己重写
+class Solution:
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        stack = []
+        char = {'{':'}', '(':')', '[':']'}
+        for i in s:
+            if i in char.keys():
+                stack.append(i)
+            elif stack == []:
+                return False
+            else:
+                a = stack.pop()
+                if char[a] != i:
+                    return False
+        if stack == []:
+            return True
+        else:
+            return False
