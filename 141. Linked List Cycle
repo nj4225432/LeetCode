@@ -1,10 +1,10 @@
-# 1 直接不会做  大神的方法   龟兔赛跑，1倍速和2倍速原理    is not 判断两个对象是否相等也是精髓   try except 防止程序无限循环
-try:
+# 1 直接不会做  大神的方法          
+try: # try except 防止程序无限循环
     slow = head
     fast = head.next
-    while slow is not fast:
+    while slow is not fast: # is not 判断两个对象是否相等也是精髓
         slow = slow.next
-        fast = fast.next.next
+        fast = fast.next.next # 龟兔赛跑，1倍速和2倍速原理
     return True
 except:
     return False
