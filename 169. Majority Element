@@ -1,0 +1,17 @@
+# 1 自己的方法，O(n^2) 先去重叠，再分别算次数
+class Solution(object):
+    def majorityElement(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        index = 0
+        x = 0
+        for i in set(nums):
+            if nums.count(i) > index:
+                index = nums.count(i)
+                x = i
+        return x
+        
+ # 2 根据题目条件计算的方法,简直奇淫技巧，简直是绝了：题目说明了 always数量存在大于n/2的数
+ return sorted(num)[len(num)/2]
