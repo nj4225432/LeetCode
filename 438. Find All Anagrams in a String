@@ -1,0 +1,45 @@
+#1 Time out
+class Solution(object):
+    def findAnagrams(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: List[int]
+        """
+        a = 0
+        lp = len(p)
+        ls = len(s)
+        psort = sorted(list(p))
+        x = []
+        while a <= ls - lp:
+            if sorted(list(s[a:lp+a])) == psort:
+                x.append(a)
+            a += 1
+        return x
+        
+# 2 own way also timeout
+a = 0
+lp = len(p)
+ls = len(s)
+pele = set(p)
+pnum = [p.count(i) for i in pele]
+x = []
+while a <= len(s) - len(p):
+    if set(s[a:lp+a]) == pele and pnum == [s[a:lp+a].count(i) for i in set(s[a:lp+a])]:
+        x.append(a)
+    a += 1
+return x
+
+#  3 向后一次+1-1的实现
+from collections import Counter 
+res = []
+pCounter = Counter(p)
+sCounter = Counter(s[:len(p)-1])
+for i in range(len(p)-1,len(s)):
+    sCounter[s[i]] += 1   # include a new char in the window
+    if sCounter == pCounter:    # This step is O(1), since there are at most 26 English letters 
+        res.append(i-len(p)+1)   # append the starting index
+    sCounter[s[i-len(p)+1]] -= 1   # decrease the count of oldest char in the window
+    if sCounter[s[i-len(p)+1]] == 0:
+        del sCounter[s[i-len(p)+1]]   # remove the count if it is 0
+return res
