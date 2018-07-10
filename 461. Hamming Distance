@@ -1,0 +1,11 @@
+#1 此题通过率很高  但是自己完全不会   首先1行代码法
+
+  return bin(x^y).count('1')  #  此乃XOR运算^ 的用法，之前完全不知道
+
+#2 此法可能运算速度更快？  手动算1的个数
+xor = x ^ y
+count = 0
+for _ in range(32):
+    count += xor & 1  # &即为与的意思
+    xor = xor >> 1  # >>为右移
+return count
