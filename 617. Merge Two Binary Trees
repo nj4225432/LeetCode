@@ -1,4 +1,5 @@
 #1 二叉树  我只能说真不是很懂
+# 二叉树本质上都是利用 二叉树Class 是不是为 None
 def mergeTrees(self, t1, t2):
     if not t1 and not t2: 
       return None
