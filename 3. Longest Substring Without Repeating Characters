@@ -1,0 +1,18 @@
+# 1 自己的方法，beats 98.89% !!   O(n)，遇到重复的字符就去掉重复的字符之前的所有字符， 每次删前都进行计数   很棒！！
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        if not s:
+            return 0
+        x = []
+        l = 0
+        for i in s:
+            if i in x:
+                if len(x) > l:
+                    l = len(x)
+                del x[:x.index(i)+1]
+            x.append(i)
+        return max(l, len(x))
