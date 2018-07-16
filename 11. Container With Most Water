@@ -1,0 +1,34 @@
+首先理解题意，其为水箱 ，故只能为矩形，而不能为梯形
+暴力解法肯定是O(n^2)逐个遍历，不必多言
+此题O(n) 所用之思维及其精髓：设定左右两个指针，排除对称性的影响，再比较左右两个指针，一旦某边更大，其往内推进必定都只会更小，所以只能推进更小的一边，且
+用个MaxArea 用以计数
+二维矩阵的图形思维来想此题更好理解，太精妙了！
+
+# 1  复制的一个算法
+class Solution:
+    def maxArea(self, height):
+        max_area = 0
+        i = 0
+        j = len(height) - 1
+
+        while i < j:
+            area = (j-i) * min(height[i], height[j])
+            max_area = max(max_area, area)
+            if height[i] <= height[j]:
+                i += 1
+            else:
+                j -= 1
+                
+        return max_area
+        
+# 2 Own 见思路后编写
+        left = 0
+        right = len(height) - 1
+        maxarea = 0
+        while left < right:
+            maxarea = max(maxarea, (right-left) * min(height[left], height[right]))
+            if height[left] < height[right]:
+                left += 1
+            else:
+                right -= 1 
+        return maxarea
