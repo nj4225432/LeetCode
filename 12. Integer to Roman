@@ -1,0 +1,29 @@
+# 1 自己方法，特别特别长，或许可以迭代？
+        x = ''
+        a1, b1 = divmod(num, 1000)
+        x += a1 * 'M'
+        a2, b2 = divmod(b1, 900)
+        x += a2 * 'CM'
+        a3, b3 = divmod(b2, 500)
+        x += a3 * 'D'
+        a4, b4 = divmod(b3, 400)
+        x += a4 * 'CD'
+        a5, b5 = divmod(b4, 100)
+        x += a5 * 'C'
+        a6, b6 = divmod(b5, 90)
+        x += a6 * 'XC'
+        a7, b7 = divmod(b6, 50)
+        x += a7 * 'L'
+        a8, b8 = divmod(b7, 40)
+        x += a8 * 'XL'
+        a9, b9 = divmod(b8, 10)
+        x += a9 * 'X'
+        a10, b10 = divmod(b9, 9)
+        x += a10 * 'IX'
+        a11, b11 = divmod(b10, 5)
+        x += a11 * 'V'
+        a12, b12 = divmod(b11, 4)
+        x += a12 * 'IV'  
+        a13, b13 = divmod(b12, 1)
+        x += a13 * 'I'        
+        return x
