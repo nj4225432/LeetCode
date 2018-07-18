@@ -1,0 +1,58 @@
+此题好像都是O（n^2）；讲道理很难
+
+# 1 自己的复杂方法，且超出了时间限制，主要思路是分正负
+        nums.sort()
+        a1 = [i for i in nums if i <= 0]
+        a2 = [i for i in nums if i > 0]
+        l1 = len(a1)
+        l2 = len(a2)
+        x = []
+        if nums.count(0) >= 3:
+            x.append([0, 0, 0])
+        for i in range(l1):
+            a = nums[:]
+            b1 = a1[i]
+            a.remove(a1[i])
+            for j in range(l2):
+                b2 = a2[j]
+                a.remove(a2[j])                
+                if -(b1 + b2) in a:
+                    if sorted([b1, b2, -(b1+b2)]) not in x:
+                        x.append(sorted([b1, b2, -(b1+b2)]))   
+        return x
+# 2   无非就是最简单的暴力方法，看来此题 可能真得用暴力解法，总想找巧或许弄巧成拙; 当然，也超出时间限制了
+result = []
+
+    for first in range(0, len(nums)):
+        for second in range(first+1, len(nums)):
+            complement = -1 * (nums[first] + nums[second])
+            rest_list = nums[second+1:]
+            
+            if complement in rest_list:
+                temp = sorted([nums[first], nums[second], complement])
+                if temp not in result:
+                    result.append(temp)
+                
+    return result
+
+# 3 定1夹击法； 整个过程建立在一个Sorted 的list 上
+
+res = []
+nums.sort()
+for i in range(len(nums)-2):  
+    if i > 0 and nums[i] == nums[i-1]:  #  如果后值与前值一样，则代表已经算过重复元素了（如下），直接跳到最后一个位置
+        continue
+    l, r = i+1, len(nums)-1  # 夹逼
+    while l < r:
+        s = nums[i] + nums[l] + nums[r]
+        if s < 0:   # 因为前提是排了序的
+            l +=1 
+        elif s > 0:
+            r -= 1
+        else:
+            res.append((nums[i], nums[l], nums[r]))
+            while l < r and nums[l] == nums[l+1]: # 计算重复元素
+                l += 1
+            while l < r and nums[r] == nums[r-1]:
+                r -= 1
+            l += 1; r -= 1     
