@@ -1,0 +1,25 @@
+ # 1 自己方法 ，直接beats 100% ，主要思路就是构造一个函数，在len大于3的时候，实现已有的与新数字代表的组合       
+        
+        dic = {'2':'abc', '3':'def', '4':'ghi', '5':'jkl', '6':'mno', '7':'pqrs', '8':'tuv', '9':'wxyz'}
+
+        def combine(exis, new):
+            re = []
+            for i in exis:
+                for j in dic[new]:
+                    re.append(i+j)
+            return re
+
+        res = []
+        l = len(digits)
+        if l == 0:
+            return res
+        for i in dic[digits[0]]:
+            res.append(i)
+        if l == 1:
+            return res
+        else:
+            i = 1
+            while i < l:
+                res = combine(res, digits[i])
+                i += 1
+            return res
