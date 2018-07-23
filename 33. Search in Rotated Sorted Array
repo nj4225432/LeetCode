@@ -1,0 +1,25 @@
+#1 自己的投机取巧法
+return (nums.index(target) if target in nums else -1)
+
+# 2 可能是所谓的正规方法；二分法中间值m分3种情况讨论：m落在左Ascent里面；落在右Ascent里面，但在偏左；落在右Ascent里面，但在偏右
+        l = 0
+        r = len(nums) - 1
+        
+        while l <= r:
+            m = (l + r)/2
+
+            if nums[m] == target:
+                return m
+            elif nums[m] >= nums[l]: # m落在左Ascent里面
+                if nums[l] <= target <= nums[m]:
+                    r = m - 1
+                else:
+                    l = m + 1
+            else:
+                if nums[m] <= target <= nums[r]: # 落在右Ascent里面，但在偏左
+                    l = m + 1
+                else:    # 落在右Ascent里面，但在偏右
+                    r = m - 1
+            
+            
+        return -1
