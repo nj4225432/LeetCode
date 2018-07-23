@@ -1,0 +1,5 @@
+#1  继续投机取巧
+if target in nums:
+    return [nums.index(target), len(nums)-sorted(nums, reverse=True).index(target)-1]   
+else:
+    return [-1, -1]
