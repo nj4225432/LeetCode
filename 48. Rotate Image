@@ -1,0 +1,14 @@
+# 0 自己的方法，占用与原矩阵相等空间 ，但很好理解，beats 97.30%
+A = matrix[:]
+m = len(matrix)
+n = len(matrix[0])
+for i in range(n):
+    x = []
+    for j in range(m):
+        x.append(A[m-j-1][i])
+    matrix[i] = x
+    
+# 1 从未见过之自带函数zip()解法， 一行解决   可能是在Python 自带list中解决矩阵问题的一大利器
+matrix[::] = zip(*matrix[::-1])
+
+
