@@ -1,0 +1,27 @@
+# 1 自己思考DFS 未做出来 此为一DFS
+def permute(self, nums):
+    res = []
+    self.dfs(nums, [], res)
+    return res
+    
+def dfs(self, nums, path, res):
+    if not nums:
+        res.append(path)
+        # return # backtracking    # 至此行为止都与自己的一模一样 
+    for i in range(len(nums)):   # 一般还是用索引？
+        self.dfs(nums[:i]+nums[i+1:], path+[nums[i]], res)  # nums[:i]+nums[i+1:] 是精髓，直接排出掉num[i]项
+        
+# 2 直接用排列组合模块 itertools也行
+  import itertools
+  return list(itertools.permutations(nums))
+  
+# 3  应该是暴力解法； 主要思想是插空
+def permute(self, nums):
+    perms = [[]]   
+    for n in nums:
+        new_perms = []
+        for perm in perms:  # 每一个现存的都进行插空
+            for i in range(len(perm)+1):   # 插空
+                new_perms.append(perm[:i] + [n] + perm[i:])   ###insert n
+        perms = new_perms
+    return perms
