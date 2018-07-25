@@ -1,0 +1,24 @@
+# 0  自己的O(n)解法，一次循环，结合dic使用，不过耗时很多 ，1833ms
+        if not strs:
+            return []
+        dic = {}
+        for i in strs:
+            if ''.join(sorted(i)) not in dic.keys():
+                dic[''.join(sorted(i))] = [i]
+            else:
+                dic[''.join(sorted(i))].append(i)
+        return list(dic.values())
+
+# 1 速度最快的方法，与自己的类似；不同之处 在于用1个count来表示不同的组类，且未用dic.keys()
+        ans = []
+        d = {}
+        count = 0
+        for s in strs:
+            t = tuple(sorted(s))
+            if t in d:
+                ans[d[t]].append(s)
+            else:
+                d[t]=count
+                count+=1
+                ans.append([s])
+        return ans
