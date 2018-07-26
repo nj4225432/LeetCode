@@ -1,0 +1,57 @@
+#0  自己用的DFS法，超出时间限了
+class Solution:
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        lenth = len(nums) - 1
+        ans = []
+        self.search(0, nums, ans, lenth)
+        if ans:
+            return True
+        else:
+            return False
+    def search(self, x, nums, ans, lenth):
+        if x+nums[x] >= lenth:
+            ans.append(1)
+            return 
+        elif ans:
+            return 
+        elif nums[x] == 0:
+            return 
+        else:
+            for i in range(x+1, x+nums[x]+1):
+                self.search(i, nums, ans, lenth)
+
+#1 简单的思维；设置了一个哨兵maxPos，一旦i迭代至比maxPos大，则出错
+class Solution(object):
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        maxPos = 0
+        for i,num in enumerate(nums):
+            if i > maxPos:
+                return False
+            maxPos = max(num+i, maxPos)
+        
+        return True
+
+#2  从后往前看
+        n=len(nums)
+        dp = [0]*n
+        dp[-1]=1
+        goodIndex = n-1
+        
+        n=len(nums)
+        for k in reversed(range(n-1)):
+            if k+nums[k]>=goodIndex:
+                goodIndex=k
+            # for j in range(k+1, min(n, k+nums[k]+1)):
+            #     if dp[j]:
+            #         dp[k]=1
+            #         break
+        
+        return goodIndex==0
