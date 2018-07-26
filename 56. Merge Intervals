@@ -1,0 +1,22 @@
+# 0 自己方法失败，补上代码，应该是类上面出了问题
+    def combine(x, y):   
+        if x[1] >= y[0]:
+            res = [x[0]] + [max(x[1], y[1])]
+        else:
+            res = [x] + [y]
+        return res
+    intervals.sort()
+    ans = [intervals[0]]
+    for i in range(1, len(intervals)):
+        ans = combine(ans[-1], intervals[i])
+    return ans
+
+# 1  Interval类的使用，核心思维与吾之一样
+def merge(self, intervals):
+    out = []
+    for i in sorted(intervals, key=lambda i: i.start):
+        if out and i.start <= out[-1].end:
+            out[-1].end = max(out[-1].end, i.end)
+        else:
+            out += i,  # 神奇的应用
+    return out
