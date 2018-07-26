@@ -47,7 +47,7 @@ class Solution(object):
         
         n=len(nums)
         for k in reversed(range(n-1)):
-            if k+nums[k]>=goodIndex:
+            if k+nums[k]>=goodIndex:   # 这一步最重要
                 goodIndex=k
             # for j in range(k+1, min(n, k+nums[k]+1)):
             #     if dp[j]:
