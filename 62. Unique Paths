@@ -18,12 +18,12 @@ def uniquePaths2(self, m, n):
             dp[i][j] = dp[i-1][j] + dp[i][j-1]  # 核心算法，很好理解
     return dp[-1][-1]
 
-#2 O(n)space动态规划
+#2 O(n)space动态规划； 只需要记录当前表格上一行与上一列的数据即可； 用一组n列的向量来记录即可
 def uniquePaths(self, m, n):
     if not m or not n:
         return 0
-    cur = [1] * n
+    cur = [1] * n  # 第1列、第1行全为1
     for i in range(1, m):
         for j in range(1, n):
-            cur[j] += cur[j-1]
+            cur[j] += cur[j-1] # 待求行列数等于同列上一行cur[j]加上同行上一列cur[j-1]递归
     return cur[-1]
