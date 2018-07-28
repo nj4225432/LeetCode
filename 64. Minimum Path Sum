@@ -1,4 +1,4 @@
-# 1 DP Solution
+# 1 DP Solution # 核心思想为m行、n列为min(m-1行n列， m行n-1列)
 def minPathSum(self, grid):
     m = len(grid)
     n = len(grid[0])
