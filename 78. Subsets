@@ -15,5 +15,5 @@ def dfs(self, nums, index, path, res):
 def subsets(self, nums):
     res = [[]]
     for num in sorted(nums):
-        res += [item+[num] for item in res]  # 此步简直是精妙
+        res += [item+[num] for item in res]  # 此步简直是精妙,每次所有的加上新的
     return res
