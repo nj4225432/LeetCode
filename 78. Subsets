@@ -1,0 +1,19 @@
+#0  不会
+
+#1 DFS法； DFS本来就是一个双重循环的思想
+def subsets1(self, nums):
+    res = []
+    self.dfs(sorted(nums), 0, [], res)
+    return res
+    
+def dfs(self, nums, index, path, res):
+    res.append(path)
+    for i in range(index, len(nums)):
+        self.dfs(nums, i+1, path+[nums[i]], res
+        
+#2 迭代法
+def subsets(self, nums):
+    res = [[]]
+    for num in sorted(nums):
+        res += [item+[num] for item in res]  # 此步简直是精妙
+    return res
