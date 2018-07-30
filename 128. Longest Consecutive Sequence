@@ -17,3 +17,20 @@ class Solution:
                 index = 1
             maxlen = max(index, maxlen)
         return maxlen
+
+#1 类似的但不用排序的方法，都用到了set
+class Solution:
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        nums = set(nums)
+        best = 0
+        for x in nums:
+            if x - 1 not in nums:
+                y = x + 1
+                while y in nums:
+                    y += 1
+                best = max(best, y - x)
+        return best
