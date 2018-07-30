@@ -1,0 +1,19 @@
+#0 97.98% 
+class Solution:
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        nums = sorted(list(set(nums)))
+        index = 1
+        maxlen = 1
+        for i in range(len(nums)-1):
+            if nums[i+1] == nums[i] + 1:
+                index += 1
+            else:
+                index = 1
+            maxlen = max(index, maxlen)
+        return maxlen
