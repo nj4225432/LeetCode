@@ -12,6 +12,6 @@ def word_break(s, words):
  	d = [False] * len(s)    
  	for i in range(len(s)):
  		for w in words:
- 			if w == s[i-len(w)+1:i+1] and (d[i-len(w)] or i-len(w) == -1):
+ 			if w == s[i-len(w)+1:i+1] and (d[i-len(w)] or i-len(w) == -1): # 遍历s，一旦有满足条件的point，返回T
  				d[i] = True
  	return d[-1]
