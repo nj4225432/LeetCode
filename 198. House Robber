@@ -1,0 +1,9 @@
+#0 不会。 但意识到这肯定是动态规划
+#1 依据： f(0) = nums[0]
+         f(1) = max(num[0], num[1])
+         f(k) = max( f(k-2) + nums[k], f(k-1) )
+     
+      last, now = 0, 0
+      for i in nums: 
+          last, now = now, max(last + i, now)
+      return now
