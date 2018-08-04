@@ -1,0 +1,3 @@
+可能是近期碰到的最简单的一题; 此题最为证明了Python的简便性，相对于其他真的是one-line秒杀
+# 0 
+return sorted(nums)[-k]
