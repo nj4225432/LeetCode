@@ -1,0 +1,13 @@
+# 0 不能用除法，这道看似很简单的题居然做不出来！！
+
+# 1 具体思路为正反序各遍历一遍， 过程中都不乘以i元素。 这种思维太聪明了！！！！！ 
+        s = 1 
+        res = []
+        for i in range(len(nums)):
+            res.append(s)
+            s *= nums[i]
+        s = 1
+        for i in range(len(nums)-1, -1, -1):
+            res[i] *= s
+            s *= nums[i]
+        return res
