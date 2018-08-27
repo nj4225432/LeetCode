@@ -1,0 +1,53 @@
+#0 直接不会  最后意识到这是动态规划
+#1 DP 法
+class Solution(object):
+    def findTargetSumWays(self, nums, S):
+        if not nums:
+            return 0
+        dic = {nums[0]: 1, -nums[0]: 1} if nums[0] != 0 else {0: 2}
+        for i in range(1, len(nums)):
+            tdic = {}
+            for d in dic:
+                tdic[d + nums[i]] = tdic.get(d + nums[i], 0) + dic[di] # DP 核心步骤
+                tdic[d - nums[i]] = tdic.get(d - nums[i], 0) + dic[di]
+            dic = tdic
+        return dic.get(S, 0)
+        
+#2 DFS 法, 此题如果直接使用DFS法会导致LTE，需要引入一个储存机制
+class Solution(object):
+    def findTargetSumWays(self, nums, S):
+        """
+        :type nums: List[int]
+        :type S: int
+        :rtype: int
+        """
+        def findTarget(i, s):
+            if (i, s) not in cache: # 此乃储存机制，引入一个全局变量来检测cache是否已经算过，若算过，则无需再算
+                r = 0
+                if i == len(nums):  # 迭代终止条件
+                    if s == 0: # 只有s等于0了，才能算找到一种方法
+                        r = 1
+                else:
+                    r = findTarget(i+1, s-nums[i]) + findTarget(i+1, s+nums[i]) # 以计算机的思维来思考 
+                cache[(i, s)] = r
+            return cache[(i, s)]
+        
+        cache = {}
+        return findTarget(0, S)
+#3 速度排名第一的法, 暂未全部理解
+        total = sum(nums)
+        A = total + S
+        if total < abs(S) or A % 2 == 1: return 0 # 判断是否可以算出
+        
+        A //= 2
+        counts = [0] * (A + 1)
+        counts[0] = 1 
+        partial = 0  
+        
+        nums.sort()
+        
+        for n in nums:
+            partial += n
+            for i in range(min(partial, A), n - 1, -1):
+                counts[i] += counts[i - n]
+        return counts[A]
