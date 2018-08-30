@@ -1,12 +1,17 @@
 # 0  自己还是不会
-# 1   这道题居然是DP
-def maxProfit(self, prices):
-    if len(prices) < 2:
-        return 0
-    sell, buy, prev_sell, prev_buy = 0, -prices[0], 0, 0
-    for price in prices:
-        prev_buy = buy
-        buy = max(prev_sell - price, prev_buy)
-        prev_sell = sell
-        sell = max(prev_buy + price, prev_sell)
-    return sell
+# 1   这道题居然是DP，直接定义买收益就是－，卖收益就是＋，然后当天是买还是卖可以收益最大化（还要相较于前一天，引入cooldown效应）max()
+class Solution:
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        if len(prices) < 2:
+            return 0
+        buy, pre_buy, sell, pre_sell = -prices[0], 0, 0, 0
+        for pri in prices:
+            pre_buy = buy
+            buy = max(pre_buy, pre_sell-pri)
+            pre_sell = sell
+            sell = max(pre_sell, pre_buy+pri)
+        return sell
