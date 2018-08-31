@@ -1,0 +1,53 @@
+# 0 自己不会哦
+# 1 BFS 广度优先搜索，第一次遇到。 当然针对此题，BFS法并不是最快的方法。 此即为提出以概念
+class Solution(object):
+    def numSquares(self, n):
+        slist = []   # 囊括所有小于n的平方数
+        i = 1
+        while i*i <= n:
+            slist.append(i*i)
+            i += 1
+        out = {n} # 记录每次减掉后的剩余值，不能有重复，所以用set
+        ct = 0 # 计数
+        while out:
+            ct += 1
+            temp = set() # 临时记录每次的
+            for i in out:
+                for j in slist:
+                    if i == j:
+                        return ct  # 一旦有为0的就可以返还了
+                    if i < j:
+                        break # i<j的时候直接跳出循环
+                    temp.add(i-j)
+            out = temp
+
+# 2 听说这道题还可以用DP？  但是时间LTE
+class Solution(object):
+
+  def numSquares(self, n):
+      dp = [-1] * (n + 1)
+      dp[0] = 0   # 作为一个完美平方数的标志
+
+      for i in range(1, n + 1):
+          j = 1
+          while j * j <= i:
+              dp[i] = dp[i - j * j]  + 1 if dp[i] == -1 else min(dp[i - j * j]  + 1, dp[i]) # 要么是上一个数，要么是一个数与一个完美平方数的和
+              j += 1
+      return dp[n]
+    
+# 3 四平方和定理    这个太牛逼了
+class Solution(object):
+    def numSquares(self, n):
+        
+        while n % 4 == 0:
+            n =  int(n/4) #including 0 1 2 3
+            
+        if n % 8 == 7:
+            return 4
+
+        for i in range(int(n**0.5)+1):
+            temp = i * i
+
+            if int((n - temp)** 0.5 ) ** 2 + temp == n: 
+                return 1 + (0 if temp == 0 else 1)
+        return 3
