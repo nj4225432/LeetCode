@@ -25,15 +25,15 @@ class Solution(object):
 class Solution(object):
 
   def numSquares(self, n):
-      dp = [-1] * (n + 1)
-      dp[0] = 0   # 作为一个完美平方数的标志
-
-      for i in range(1, n + 1):
-          j = 1
-          while j * j <= i:
-              dp[i] = dp[i - j * j]  + 1 if dp[i] == -1 else min(dp[i - j * j]  + 1, dp[i]) # 要么是上一个数，要么是一个数与一个完美平方数的和
-              j += 1
-      return dp[n]
+        dp = [-1] * (n+1)
+        dp[0] = 0   # 作为一个完美平方数的标志
+        for i in range(1, n+1):
+            j = 2
+            dp[i] = dp[i-1] + 1
+            while j**2 <= i:
+                dp[i] = min(dp[i-j**2]+1, dp[i]) # 比较，观察期是否可以走位 一个数与前完美平方数之和
+                j += 1
+        return dp[n]
     
 # 3 四平方和定理    这个太牛逼了
 class Solution(object):
