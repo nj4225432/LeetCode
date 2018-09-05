@@ -1,0 +1,22 @@
+#0 这道题自然是十分的难，但又很接地气
+#1 扫描线 sweep line 算法，  从未见过； 此题应用到堆结构，乃为最重要的部分
+class Solution:
+    def getSkyline(self, buildings):
+        def addsky(lo, hei):  # 消除重复项地增加skyline
+            if sky[-1][1] != hei:
+                sky.append([lo, hei])
+        import heapq  #  载入Python 堆模块
+        sky = [[-1, 0]]
+        po = set([i[0] for i in buildings] + [i[1] for i in buildings])  # 所有的左右点，因为skypoint 一定是在这些点上做文章
+        live = []
+        i = 0
+        for j in sorted(po):  # 一个一个位置的遍历
+            while i < len(buildings) and buildings[i][0] <= j:
+                heapq.heappush(live, (-buildings[i][2], buildings[i][1])) # 左边在po之左的都加进去
+                i += 1
+            while live and live[0][1] <= j:
+                heapq.heappop(live)   # 移除最高的但右边已小于po的堆结构
+            h = -live[0][0] if live else 0
+            addsky(j, h)
+        return sky[1:]
+# 整个算法看懂了其实不难，一种神清气爽的感觉
