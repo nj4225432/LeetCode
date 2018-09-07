@@ -1,0 +1,23 @@
+#  0 不会，还是不会
+# 1  DFS
+class Solution:
+  def canFinish(self, numCourses, prerequisites):
+      graph = [[] for _ in range(numCourses)]
+      visit = [0 for _ in range(numCourses)] # visit默认0，参观过就是-1，如果没问题就是1
+      for x, y in prerequisites:
+          graph[x].append(y) # 创造一个内列表，graph[x]装必要的y，精髓
+      def dfs(i):
+          if visit[i] == -1:
+              return False
+          if visit[i] == 1:
+              return True
+          visit[i] = -1
+          for j in graph[i]:
+              if not dfs(j):
+                  return False
+          visit[i] = 1
+          return True
+      for i in range(numCourses):
+          if not dfs(i):
+              return False
+      return True
