@@ -21,3 +21,30 @@ class Solution:
           if not dfs(i):
               return False
       return True
+      
+# 2  速度排名第一的算法
+class Solution:
+    def canFinish(self, numCourses, prerequisites):
+        mat = [[] for _ in range(numCourses)]
+        degrees = [0] * numCourses
+        
+        for l in prerequisites:
+            mat[l[1]].append(l[0])
+            degrees[l[0]] += 1
+        
+        stack = []
+        for i in range(len(degrees)):
+            if degrees[i] == 0:
+                stack.append(i)
+        
+        result = 0
+        while stack:
+            result += 1
+            prev = stack.pop()
+            for next in mat[prev]:
+                degrees[next] -= 1
+                if degrees[next] == 0:
+                    stack.append(next)
+        
+        
+        return result == numCourses
