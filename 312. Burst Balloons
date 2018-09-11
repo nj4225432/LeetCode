@@ -1,0 +1,47 @@
+#0 是真他妈的难啊，当然还是想到了dp
+#1 确实是dp，核心思想是 烧掉一个气球，被烧掉的气球坐边和右边最大值并不受到其影响，按任何顺序扎破左半边的所有气球不会影响右半边的最大值
+class Solution:
+    def maxCoins(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        nums = [1] + nums + [1]
+        l = len(nums)
+        dp = [[0]*l for _ in range(l)]
+        
+        def caculate(a, b):
+            if dp[a][b] or b == a+1:
+                return dp[a][b]
+            for k in range(a+1, b):
+                dp[a][b] = max(dp[a][b], nums[a] * nums[k] * nums[b] + caculate(a, k) + caculate(k, b)) # 核心算法
+            return dp[a][b]
+        
+        return caculate(0, l-1)
+        
+#2  速度第一算法，本质上与上一算法思想上还是一样，但有作改进
+class Solution:
+    def maxCoins(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        # burst zero-balloon
+        nums = [num for num in nums if num > 0]  # 碰到0先把0戳爆，所以不影响 
+        n_len = len(nums)
+        if n_len == 0:
+            return 0
+        
+        nums = [1] + nums + [1]
+        burst_value = [[0]*(n_len+2) for _ in range(n_len+2)]
+        
+        for r in range(2, n_len+2):
+            for l in range(r-2, -1, -1):
+                bv = 0
+                for i in range(l+1, r):
+                    bv_i = burst_value[l][i] + nums[l] * nums[i] * nums[r] + burst_value[i][r]
+                    bv = bv_i if bv_i > bv else bv
+                burst_value[l][r] = bv
+                    
+        return burst_value[0][n_len+1]
