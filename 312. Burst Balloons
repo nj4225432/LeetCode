@@ -27,21 +27,17 @@ class Solution:
         :rtype: int
         """
         
-        # burst zero-balloon
-        nums = [num for num in nums if num > 0]  # 碰到0先把0戳爆，所以不影响 
-        n_len = len(nums)
-        if n_len == 0:
+        nums = [num for num in nums if num > 0]  #碰到0 先把0戳爆，不影响整体
+        if not nums:
             return 0
-        
         nums = [1] + nums + [1]
-        burst_value = [[0]*(n_len+2) for _ in range(n_len+2)]
-        
-        for r in range(2, n_len+2):
+        n = len(nums)
+        dp = [[0]*n for _ in nums]
+        for r in range(2, n):
             for l in range(r-2, -1, -1):
-                bv = 0
-                for i in range(l+1, r):
-                    bv_i = burst_value[l][i] + nums[l] * nums[i] * nums[r] + burst_value[i][r]
-                    bv = bv_i if bv_i > bv else bv
-                burst_value[l][r] = bv
-                    
-        return burst_value[0][n_len+1]
+                ac = 0
+                for k in range(l+1, r):
+                    sco = dp[l][k] + dp[k][r] + nums[l] * nums[k] * nums[r]  # 从无到有的算起
+                    ac = sco if sco > ac else ac
+                dp[l][r] = ac
+        return dp[0][n-1]
