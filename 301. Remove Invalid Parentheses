@@ -1,0 +1,32 @@
+#0 真心不会
+#1 排名第一的算法，第一道看了答案还是不会的题，哈哈哈
+class Solution:
+    def removeInvalidParentheses(self, s):
+        """
+        :type s: str
+        :rtype: List[str]
+            """
+        self.ans = []
+        self.remove(s, 0, 0, ("(", ")"))
+        return self.ans
+    
+    def remove(self, s, last_i, last_j, pars):
+        i, counter = last_i, 0
+        while i < len(s):
+            if s[i] == pars[0]:
+                counter += 1
+            elif s[i] == pars[1]:
+                counter -= 1
+            if counter >= 0:
+                i += 1
+                continue
+            j = last_j
+            while j <= i:
+                if s[j] == pars[1] and (j == last_j or s[j-1] != s[j]):
+                    self.remove(s[:j] + s[j+1:], i, j, pars)
+                j += 1
+            return
+        if pars[1] == ")":
+            self.remove(s[::-1], 0, 0, (")", "("))
+        else:
+            self.ans.append(s[::-1])
