@@ -1,0 +1,55 @@
+#0 一开始想简单了，想用贪心算法，后领悟此题本意，用BFS即暴力解法，TLE
+# 复杂版
+class Solution:
+    def coinChange(self, coins, amount):
+        """
+        :type coins: List[int]
+        :type amount: int
+        :rtype: int
+        """
+        if amount == 0:
+            return 0
+        i = 1
+        ans = set(coins)
+        while True:
+            if amount in ans:
+                return i
+            if min(ans) > amount:
+                return -1
+            ans = set([m+n for m in ans for n in coins])
+            i += 1
+# 改进版
+        if amount == 0:
+            return 0
+        ans = set(coins)
+        if amount in coins:
+            return 1
+        index = 1
+        while True:
+            index += 1            
+            wax = set()
+            for i in ans:
+                for j in coins:
+                    if i + j == amount:
+                        return index
+                    elif i+j < amount:
+                        wax.add(i+j)
+            ans = wax.copy()
+            if not ans:
+                return -1    
+
+# 1 DP算法（当然我也了解到此为DP）
+class Solution:
+    def coinChange(self, coins, amount):
+        """
+        :type coins: List[int]
+        :type amount: int
+        :rtype: int
+        """
+        MAX = float('inf') # 此处取无穷大别有意义
+        dp = [0] + [MAX] * amount
+
+        for i in range(1, amount + 1):
+            dp[i] = min([dp[i - c] if i - c >= 0 else MAX for c in coins]) + 1
+
+        return [dp[amount], -1][dp[amount] == MAX]
