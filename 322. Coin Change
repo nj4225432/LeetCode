@@ -53,3 +53,33 @@ class Solution:
             dp[i] = min([dp[i - c] if i - c >= 0 else MAX for c in coins]) + 1
 
         return [dp[amount], -1][dp[amount] == MAX]
+
+# 2 BFS   参观用True来标记，是本法的精华，大大减少1法的时间
+class Solution:
+    def coinChange(self, coins, amount):
+        """
+        :type coins: List[int]
+        :type amount: int
+        :rtype: int
+        """
+        if amount == 0:
+            return 0
+        value1 = [0]  # 两个数互相替换，用得也很精妙
+        value2 = []
+        nc =  0
+        visited = [False]*(amount+1)
+        visited[0] = True
+        while value1:  # 跳出循环的条件，设置得太好了
+            nc += 1
+            for v in value1:
+                for coin in coins:
+                    newval = v + coin
+                    if newval == amount:
+                        return nc
+                    elif newval > amount:
+                        continue
+                    elif not visited[newval]:
+                        visited[newval] = True  # 用了一个visit 来记录，避免重算
+                        value2.append(newval)
+            value1, value2 = value2, []
+        return -1
