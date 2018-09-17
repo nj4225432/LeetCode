@@ -1,0 +1,16 @@
+# 0 自创了，未用任何模块
+class Solution:
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        dic = {}
+        res = []
+        for i in nums:
+            dic[i] = dic.get(i, 0) + 1
+        dic = sorted(dic.items(), key=lambda x:x[1], reverse=True)  # 最关键的对字典排序
+        for i in range(k):
+            res.append(dic[i][0])
+        return res
