@@ -20,7 +20,7 @@ class Solution:
             i += 1
             
         return s
-#1 太牛逼了，思路跟我的一样，只是我还差几步
+#1 太牛逼了，思路跟我的一样，只是我还差几步.  整体思想是从内到外分解
 class Solution:
     def decodeString(self, s):
         """
