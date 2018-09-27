@@ -1,0 +1,76 @@
+#0 自身的方法 ，回文我还是会做的哦O(n^2)
+class Solution:
+    def countSubstrings(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        def dfs(i, j):
+            if i-1 == j:
+                return 1
+            elif s[i] == s[j]:
+                if i == j or i+1 == j:
+                    return 1
+                else:
+                    return dfs(i+1, j-1)
+            return 0
+        
+        count = 0    
+        size = len(s)
+        for l in range(size-1):
+            for r in range(size-1, l, -1):
+                if s[l] == s[r]:
+                    count += dfs(l+1, r-1)
+                    
+        return count+size
+
+#1 One-Line 法，一下子戳破了此题的真谛，其实真的很简单，同样O(n^2)
+class Solution:
+    def countSubstrings(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        return sum(s[i:j] == s[i:j][::-1] for j in range(len(s) + 1) for i in range(j)) 
+    
+
+#2 中心扩散原理，太吊了
+class Solution:
+    def countSubstrings(self, S):
+        N = len(S)
+        ans = 0
+        for center in range(2*N - 1):
+            left = center // 2
+            right = left + center % 2 # 在缝隙right就加1，否则跟左边的一样
+            while left >= 0 and right < N and S[left] == S[right]:
+                ans += 1
+                left -= 1
+                right += 1
+        return ans
+ 
+#3 速度排名第一个方法,核心要点：简化重复项！！！  从而可以不像上一算法一样，直接从第二个元素开始看；论while的巧用
+class Solution:
+    def countSubstrings(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        size = len(s)
+        repeat = [] # 检查连续重复的个数
+        i = 0
+        count = 0
+        while i <= size-1:
+            left = i - 1
+            while i < size-1 and s[i] == s[i+1]:  # 检查重复
+                i += 1
+            right = i + 1
+            repeat.append(right-left-1)
+            while 0 <= left < size and 0 <= right < size and s[left] == s[right]: # 注意边界判别条件与其顺序
+                left -= 1
+                right += 1
+                count += 1
+            i += 1
+        for l in repeat:
+            count += l * (l+1) / 2 # 不就是等差数列公式？一个字符串的子串数目
+        
+        return int(count)  
