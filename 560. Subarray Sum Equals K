@@ -1,0 +1,36 @@
+# 0 自己的暴力法，O(n^2)，还是TLE了
+class Solution:
+    def subarraySum(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        ans = 0
+        size = len(nums)
+        for i in range(size):
+            store = 0
+            for j in range(i, size):
+                store += nums[j]
+                if store == k:
+                    ans += 1
+        return ans 
+
+# 1 这种题，居然能O(n)！！！ 主要思维是前n个数的sum与k的差若是之前出现过的数，就为增加之前出现这个数的次数，太牛逼了；利用的工具为哈希表，在Python里用dict即可
+class Solution:
+    def subarraySum(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        dic = {0:1}
+        he = 0
+        ans = 0
+        for i in nums:  # 先判别，再加
+            he += i
+            if he - k in dic:
+                ans += dic[he-k]
+            dic[he] = dic.get(he, 0) + 1
+
+        return ans 
