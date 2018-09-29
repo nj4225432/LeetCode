@@ -1,0 +1,19 @@
+#0 此题看起来简单，但预设条件很多，不会
+#1 Floyd's Tortoise and Hare ，以前碰到过的！！ 龟兔算法！！
+class Solution:
+    def findDuplicate(self, nums):
+    # 判断两个速度相交点
+        tortoise = nums[0]
+        haze = nums[0]
+        while True:
+            tortoise = nums[tortoise]
+            haze = nums[nums[haze]]
+            if tortoise == haze:
+                break
+    # 判断线圈相交点，即为重复数字点
+        ptr1 = nums[0]
+        ptr2 = tortoise
+        while ptr1 != ptr2:
+            ptr1 = nums[ptr1]
+            ptr2 = nums[ptr2]
+        return ptr1
