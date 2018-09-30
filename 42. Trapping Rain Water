@@ -1,0 +1,61 @@
+#0 自己的方法，有问题，但领悟到了两边逼近这个技巧，O(n)
+class Solution:
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        if not height:
+            return 0
+        height = height
+        size = len(height)
+        ans = 0
+        head = 0
+        tail = size-1
+        headmax = 0
+        tailmax = 0
+        while head != tail:
+            if height[head] >= headmax:
+                headmax = height[head]
+                head += 1
+            elif height[tail] >= tailmax:
+                tailmax = height[tail]
+                tail -= 1
+            elif height[head] < headmax:
+                ans += headmax - height[head]
+                head += 1
+            elif height[tail] < tailmax:
+                ans += tailmax - height[tail]
+                tail -= 1
+
+            
+        return ans
+# 1 相同的思路，主要是height[start] <= height[end]这个判断
+class Solution:
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        if not height:
+            return 0
+        start = 0
+        end = len(height) - 1
+        max_s = 0
+        max_e = 0
+        count = 0
+        while start < end:
+            if height[start] <= height[end]:
+                if height[start] <= max_s:
+                    count += max_s - height[start]
+                else:
+                    max_s = height[start]
+                start += 1
+            else:
+                if height[end] <= max_e:
+                    count = count + max_e - height[end]
+                else:
+                    max_e = height[end]
+                end -= 1
+                
+        return count
