@@ -1,0 +1,13 @@
+#0 难度是hard，而且通过率也只有25%左右，但是，吾很快就搞出来了啊  94.57%
+class Solution:
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        num = sorted(nums1+nums2)
+        size = len(num)
+        if size % 2 == 0:
+            return (num[size//2-1]+num[size//2]) / 2
+        return num[size//2]
