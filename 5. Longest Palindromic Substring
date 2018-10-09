@@ -1,0 +1,51 @@
+#0 此题真是奇葩，4920ms，还能击败22.82%。主要原理为从插空两边分散检查回文法
+class Solution:
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        if not s:
+            return ''
+        size = len(s)
+        points = 2 * size - 1
+        ans = temp = s[0]
+        for i in range(points):
+            x = 1
+            while i%2 == 0 and i//2-x >= 0 and i//2+x < size and s[i//2+x] == s[i//2-x]:
+                temp = s[i//2-x:i//2+x+1]
+                x += 1
+            x = 0
+            while i%2 == 1 and i//2-x >= 0 and i//2+x+1 < size and s[i//2+x+1] == s[i//2-x]:
+                temp = s[i//2-x:i//2+x+2]
+                x += 1
+            if len(temp) > len(ans):
+                ans = temp
+        return ans 
+
+#1 速度排名第一的算法
+class Solution:
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        res = ""
+        if s == s[::-1]: # s is already a palindrome
+            return s
+        Len   = 1
+        start = 0
+        for i in range(1, len(s)): # index values of string
+            p1, p2 = i - Len, i + 1  
+            if p1 >= 1:
+                temp = s[p1 - 1:p2]
+                if temp == temp[::-1]:
+                    start = p1 - 1
+                    Len += 2
+                    continue
+            if p1 >= 0:
+                temp = s[p1:p2]
+                if temp == temp[::-1]:
+                    start = p1
+                    Len += 1
+        return s[start:start + Len]
