@@ -1,0 +1,51 @@
+#0 晓得可以用栈来做，但是离实际就差那么一点距离
+
+#1 看了讲解之后的栈法，无论什么情况下，碰到'('就入栈，碰到')'就出栈，若出了后为空则吧')'的index加入栈，然后算index差。自编，beats 100% !!
+class Solution:
+    def longestValidParentheses(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        stack = [-1]
+        maxsize = 0
+        for i in range(len(s)):
+            if s[i] == '(':
+                stack.append(i)
+            else:
+                stack.pop()
+                if not stack:
+                    stack.append(i)
+                else:
+                    maxsize = max(i-stack[-1], maxsize)
+        return maxsize   
+
+#2 左右逢源法，左右跑一轮计数，厉害了，也beats 100% !!
+class Solution:
+    def longestValidParentheses(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        left, right = 0, 0
+        maxsize = 0
+        for i in s:
+            if i == '(':
+                left += 1
+            else:
+                right += 1
+                if left < right:
+                    left, right = 0, 0
+                elif left == right:
+                    maxsize = max(maxsize, left * 2)
+        left, right = 0, 0
+        for i in s[::-1]:
+            if i == ')':
+                left += 1
+            else:
+                right += 1
+                if left < right:
+                    left, right = 0, 0
+                elif left == right:
+                    maxsize = max(maxsize, left * 2)
+        return maxsize
