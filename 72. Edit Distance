@@ -1,0 +1,20 @@
+#0 讲道理，完全没思路
+#1 没想到此题是出名的一道题！编辑距离，又名莱文斯坦距离，1965年又俄罗斯科学家莱文斯坦提出，是NLP的基础； 此题亦为动态规划的经典，斯坦福课程例题！！
+class Solution:
+    def minDistance(self, word1, word2):
+        """
+        :type word1: str
+        :type word2: str
+        :rtype: int
+        """
+        l1, l2 = len(word1)+1, len(word2)+1 # +1 的目的为使空串也符合条件，简直精妙
+        dp = [[0 for _ in range(l2)] for _ in range(l1)]
+        for i in range(l1):
+            dp[i][0] = i
+        for j in range(l2):
+            dp[0][j] = j
+        for i in range(1, l1):
+            for j in range(1, l2):
+                dp[i][j] = min(dp[i-1][j]+1, dp[i][j-1]+1, dp[i-1][j-1]+(word1[i-1]!=word2[j-1])) # 原理判断语句也可以用于加减乘除！太厉害了
+        return dp[-1][-1]
+                    
