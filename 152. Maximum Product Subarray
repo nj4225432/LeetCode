@@ -1,0 +1,15 @@
+#0 不会啊不会，强烈感觉是动态规划
+
+#1  事实上用正负技巧解决了，用big, small来记录了当前最大最小
+class Solution:
+    def maxProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+
+        maximum = big = small = nums[0]
+        for i in nums[1:]:
+            big, small = max(i, i*big, i*small), min(i, i*big, i*small) #保证了连续性
+            maximum = max(maximum, big)
+        return maximum
