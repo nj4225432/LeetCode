@@ -1,0 +1,21 @@
+#0 寻找一个行列都是ascent的矩阵，本来想用二分法，然后我怂了
+#1 其实想法很类似，但始终想走入这个Binarysearch的坑,按比较大小顺序-1＋1寻找
+class Solution:
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        if not len(matrix) or not len(matrix[0]):
+            return False
+        r, c = 0, len(matrix[0])-1
+        while 1:
+            if matrix[r][c] == target:
+                return True
+            elif matrix[r][c] >= target:
+                c -= 1
+            else:
+                r += 1
+            if r >= len(matrix) or c < 0:
+                return False
