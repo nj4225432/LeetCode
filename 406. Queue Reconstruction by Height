@@ -1,0 +1,13 @@
+#0 只能说想出来了一半
+#1 简直太精妙了，核心思想是，把更大的顶到后面去不影响之前更大的index
+class Solution:
+    def reconstructQueue(self, people):
+        """
+        :type people: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        people.sort(key=lambda x:(-x[0], x[1]))
+        res = []
+        for i in people:                   
+            res.insert(i[1], i)
+        return res
