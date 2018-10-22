@@ -1,0 +1,36 @@
+#0 不会做。说实话，我觉得这道题特别难
+#1 没想到这道题都可以扯到DP上来。 任何方法的核心思想都是找sum/2这个target（如果为奇数可以直接判断为False）
+# 这个dp方法用Python 是TLE的了的
+class Solution:
+    def canPartition(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        s = sum(nums)
+        if s % 2 == 1:
+            return False
+        target = s // 2
+        dp = [True] + [False] * target
+        for i in nums:
+            for j in range(target, i-1, -1):  #每轮要遍历target到nums单个数值i间所有数，绝对重复了 
+                dp[j] = dp[j] | dp[j-i]  
+        return dp[target] 
+        
+
+a = Solution()
+b = a.canPartition([1,5,11,5])
+
+# 2 递归算法，其实我一开始想到了第一步，但是感觉如果要一直循环太麻烦了，没想到此题真得如此做。 T
+class Solution(object):
+    def canPartition(self, nums):
+                                                                      
+        nums.sort(reverse=True)
+        def helper(start, target):         # Here path is not needed
+            if target < 0: return
+            elif target == 0: return True
+            for i in range(start, len(nums)):
+                if helper(i+1, target-nums[i]): return True
+            return False
+
+        return False if sum(nums)%2 else helper(0, sum(nums)/2)
