@@ -1,0 +1,38 @@
+#0 自己还是不会做哦
+#1 动态规划,双重循环，O(n^2)，但是TLE了！ 因为一个变态的测试用例，你懂的
+class Solution:
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        size = len(nums)
+        dp = size * [1]
+        for i in range(size):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j]+1)
+        return max(dp)
+
+#2 传说中的O(nlogn)二分搜索法，真是牛逼,思想为寻找能构成最长递增子串的最小末位（存储的对应长度LIS的最小末尾）；思想为看，代码纯自编，36ms ！
+class Solution:
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        size = len(nums)
+        dp = [nums[0]]
+        for i in range(1, size):
+            if nums[i] > dp[-1]:
+                dp.append(nums[i])
+            elif nums[i] < dp[-1]:
+                for j in range(len(dp)):
+                     if nums[i] <= dp[j]:
+                            dp[j] = nums[i]
+                            break
+        return len(dp)
