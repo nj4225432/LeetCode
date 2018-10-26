@@ -1,0 +1,29 @@
+#0 时会时不会，这道题是真折腾
+#1 DFS
+class Solution:
+    def exist(self, board, word):
+        """
+        :type board: List[List[str]]
+        :type word: str
+        :rtype: bool
+        """
+
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if self.dfs(i, j, board, word):
+                    return True
+        return False
+                
+            
+    def dfs(self, x, y, board, word):
+        if len(word) == 0:
+            return True
+        if x < 0 or x >= len(board) or y < 0 or y >= len(board[0]) or board[x][y] == 1:
+            return False
+
+        if board[x][y] == word[0]:
+            temp = board[x][y]
+            board[x][y] = 1
+            res = self.dfs(x-1, y, board, word[1:]) or self.dfs(x+1, y, board, word[1:]) or self.dfs(x, y-1, board, word[1:]) or self.dfs(x, y+1, board, word[1:])
+            board[x][y] = temp
+            return res 
