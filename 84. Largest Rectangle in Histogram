@@ -1,0 +1,16 @@
+#0 不会
+#1 stack，把这个阵列想象成递增出基本思路，max()所有的，要自己算才能看哪个最大；再考虑出现减小的情况，把前面大的全变为这个小的
+class Solution:
+    def largestRectangleArea(self, height):
+        height.append(0) #此步真是太经典了
+        stack = [-1]
+        res = 0
+        for i in range(len(height)):
+            if height[i] < height[i-1]:
+                j = 1
+                while stack[-j] > height[i]:
+                    res = max(res, j * stack[-j])
+                    stack[-j] = height[i]
+                    j += 1
+            stack.append(height[i])        
+        return res
