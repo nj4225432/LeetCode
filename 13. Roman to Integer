@@ -1,0 +1,67 @@
+#0 自己的方法，正向思维，虽然臃肿，但是管用  80.67%
+class Solution:
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        res = 0
+        l = len(s)
+        i = 0 
+        while i < l:
+            if s[i] == 'I':
+                if i+1 < l and s[i+1] == 'V':
+                    res += 4
+                    i += 2
+                elif i+1 < l and s[i+1] == 'X':
+                    res += 9
+                    i += 2
+                else:
+                    res += 1
+                    i += 1
+            elif s[i] == 'V':
+                res += 5
+                i += 1
+            elif s[i] == 'X':
+                if i+1 < l and s[i+1] == 'L':
+                    res += 40
+                    i += 2
+                elif i+1 < l and s[i+1] == 'C':
+                    res += 90
+                    i += 2
+                else:
+                    res += 10
+                    i += 1
+            elif s[i] == 'L':
+                res += 50
+                i += 1
+            elif s[i] == 'C':
+                if i+1 < l and s[i+1] == 'D':
+                    res += 400
+                    i += 2
+                elif i+1 < l and s[i+1] == 'M':
+                    res += 900
+                    i += 2
+                else:
+                    res += 100
+                    i += 1    
+            elif s[i] == 'D':
+                res += 500
+                i += 1
+            elif s[i] == 'M':
+                res += 1000
+                i += 1
+        return res
+        
+#1 这道题真是让人体会到了算法的力量，同样的效果，4行代替40多行，而且还更快； 逆向思维（也不算），主要是观察在前在后分别代表什么意思
+class Solution:
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        dic = {'M':1000, 'D':500, 'C':100, 'L':50, 'X':10, 'V':5, 'I':1}
+        res, behind = 0, 'I' 
+        for i in s[::-1]:
+            res, behind = res-dic[i] if dic[i]<dic[behind] else res+dic[i], i
+        return res
