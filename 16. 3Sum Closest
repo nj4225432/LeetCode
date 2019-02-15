@@ -1,0 +1,42 @@
+#0 不会不会
+#1 左右指针法， 此种方法十分经典，一定得牢记O(n^2) 
+class Solution:
+    def threeSumClosest(self, nums: 'List[int]', target: 'int') -> 'int':
+        nums.sort()
+        res = sum(nums[:3])
+        for i in range(len(nums)):
+            l, r = i+1, len(nums)-1
+            while l < r:
+                s = sum((nums[i], nums[l], nums[r]))
+                if abs(s-target) < abs(res-target):  #一定得有绝对值
+                    res = s
+                if s < target:  # 记得此处是s
+                    l += 1
+                elif s > target:
+                    r -= 1
+                else: # break early 
+                    return res
+        return res
+        
+#2 速度排名第一的方法(自己改进之后beat 100%)，区别于以上的核心点为如果一开始最小的三个就大于target，就没必要再循环了（反之同理） 40ms
+class Solution:
+    def threeSumClosest(self, nums: 'List[int]', target: 'int') -> 'int':
+        nums.sort()
+        temp = []
+        for i, num in enumerate(nums[:-2]):
+            l, r = i+1, len(nums)-1
+            if nums[i]+nums[l]+nums[l+1] > target:  # 区别之核心
+                temp.append(nums[i]+nums[l]+nums[l+1])
+            elif nums[i]+nums[r]+nums[r-1] < target:
+                temp.append(nums[i]+nums[r]+nums[r-1])
+            else:
+                while l < r:
+                    temp.append(nums[i]+nums[l]+nums[r])
+                    if nums[i]+nums[l]+nums[r] < target:
+                        l += 1
+                    elif nums[i]+nums[l]+nums[r] > target:
+                        r -= 1
+                    else:
+                        return target
+        temp.sort(key=lambda x:abs(target-x))
+        return temp[0]
