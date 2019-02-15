@@ -1,0 +1,10 @@
+#0 不会不会
+#1 如果知道了zip()的用法，此题就十分简单
+class Solution:
+    def longestCommonPrefix(self, strs: 'List[str]') -> 'str':
+        if not strs:
+            return ''
+        for index, ch in enumerate(zip(*strs)):
+            if len(set(ch)) > 1:
+                return strs[0][:index]
+        return min(strs)
