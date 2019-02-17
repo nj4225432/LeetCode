@@ -1,0 +1,48 @@
+#0 自己的方法 172ms,  beat 72.18%
+class Solution:
+    def fourSum(self, nums: 'List[int]', target: 'int') -> 'List[List[int]]':
+        nums.sort()
+        lenth = len(nums)
+        res = []
+        for i in range(lenth-3):
+            if nums[i]+nums[i+1]+nums[i+2]+nums[i+3] > target:
+                break
+            if nums[i]+nums[lenth-1]+nums[lenth-2]+nums[lenth-3] < target:
+                continue
+            for j in range(lenth-1, i+2, -1):
+                l, r = i+1, j-1
+                while l < r:
+                    if nums[i]+nums[l]+nums[r]+nums[j] > target:
+                        r -= 1
+                    elif nums[i]+nums[l]+nums[r]+nums[j] < target:
+                        l += 1
+                    else:
+                        if [nums[i], nums[l], nums[r], nums[j]] not in res:
+                            res.append([nums[i], nums[l], nums[r], nums[j]])
+                        l += 1
+                        r -= 1
+        return res
+        
+#1 速度最快的方法  前后两n^2法
+class Solution:
+    def fourSum(self, nums, target):
+        nums.sort()
+        if len(nums)<4 or 4*nums[0]>target or 4*nums[-1]<target:
+            return []
+        pairs = {}
+        res = set()
+        for i in range(len(nums)):  # 此乃后
+            for j in range(i+1,len(nums)):
+                s = nums[i]+nums[j]  # 正负早已决定  
+                if s not in pairs:
+                    pairs[s] = [(i,j)]
+                else:
+                    pairs[s].append((i,j))
+        for i in range(len(nums)): # 此乃前
+            for j in range(i+1,len(nums)):
+                searched = target - nums[i]-nums[j]
+                if searched in pairs:
+                    for q in pairs[searched]:
+                        if q[0]>j:  # That's Ok
+                            res.add((nums[i],nums[j],nums[q[0]],nums[q[1]]))
+        return list(res)
