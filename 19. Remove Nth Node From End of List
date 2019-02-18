@@ -1,0 +1,25 @@
+#0 自己可能对ListNode 数据类型在Python 里面实现还不太熟悉，但是思路是有的，很简单，找到它，删掉它，再重组
+#1 算法真的是太变态了，找lenth-n的数，可以fast先n下，再启动slow，fast找到尾巴就行了，算法真的是厉害
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        fast = slow = head
+        for _ in range(n):
+            fast = fast.next
+        if not fast.next :
+            return head.next
+        while fast.next:
+            fast = fast.next
+            slow = slow.next
+        slow.next = slow.next.next
+        return head   # 为什么return 的是head，你需要搞清楚对于Python 链表类，每一个数都是一个class，都只有val和next两个属性
