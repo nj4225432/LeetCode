@@ -1,0 +1,27 @@
+#0 首先自己对Python链表的理解肯定还是有些问题的，看了很多很多讲解和思考之后，编了个自己的程序
+class Solution:
+    def swapPairs(self, head: 'ListNode') -> 'ListNode':
+        if not head:
+            return None
+        if not head.next:
+            return head
+        pre = ListNode(0)
+        pre.next = head
+        a = head.next
+        while pre.next and pre.next.next:
+            temp1 = pre.next
+            temp2 = pre.next.next
+            pre.next, temp2.next, temp1.next = temp2, temp1, temp2.next
+            pre = temp1
+        return a
+
+#1 自己的这个程序借鉴的方法，主要是还不太熟悉self的使用; 理解之后，这个程序太牛逼了，self的使用，直接省略链头、判断语句的引用，更精妙之处在于可以巧妙地在第一次循环中就换掉！！ 
+class Solution:
+    def swapPairs(self, head):
+        pre, pre.next = self, head
+        while pre.next and pre.next.next:
+            a = pre.next
+            b = a.next
+            pre.next, b.next, a.next = b, a, b.next  #偷换概念的关键步骤
+            pre = a
+        return self.next
