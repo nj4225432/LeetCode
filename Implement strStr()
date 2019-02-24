@@ -1,0 +1,9 @@
+#0 自己的方法，不就这么简单吗？
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        try:
+            res = haystack.index(needle)
+        except:
+            return -1
+        else:
+            return res
