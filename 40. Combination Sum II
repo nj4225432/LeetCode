@@ -1,0 +1,21 @@
+#0 一看到此类的就放弃了
+#1 dfs  其实之前就做过类似的，牛逼的不行
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        if not candidates:
+            return []
+        candidates.sort()
+        res = []
+        self.dfs(candidates, target, 0, [], res)
+        return res
+        
+    def dfs(self, candidates, target, i, path, res):
+        if target == 0:
+            res.append(path)
+            return
+        for j in range(i, len(candidates)):
+            if j > i and candidates[j] == candidates[j-1]:
+                continue
+            if candidates[j] > target:
+                return
+            self.dfs(candidates, target-candidates[j], j+1, path+[candidates[j]], res)
