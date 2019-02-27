@@ -1,0 +1,4 @@
+#0 不晓得这道题想表达啥
+class Solution:
+    def multiply(self, num1: str, num2: str) -> str:
+        return str(eval(num1+'*'+num2))
