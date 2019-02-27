@@ -1,0 +1,23 @@
+# 0 自己肯定不会
+#1 回溯算法，真的是难； 只要以*为间隔的所有其他部分能匹配上就行，不行就回到上个*看，减轻对？的关注
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        si = pi = 0
+        ssi = spi = None  # '*' indexes    回溯点
+        sl, pl = len(s), len(p)
+        while si < sl:
+            if pi < pl and p[pi] == '*':
+                ssi, spi = si, pi
+                pi += 1                
+            elif pi < pl and (p[pi] == s[si] or p[pi] == '?'):
+                si, pi = si+1, pi+1
+            elif spi is not None:
+                si, pi = ssi+1, spi+1
+                ssi += 1                
+            else:
+                return False
+
+        while pi < pl and p[pi] == '*': 解决末尾有多个*的情况
+            pi += 1
+
+        return pi == pl  #鉴别p是否超出的情况
