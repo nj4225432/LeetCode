@@ -1,0 +1,39 @@
+#0 自己的动态规划法，被一个25000的数据恶心到了，其他来看，稳的不行
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        lenth = len(nums)
+        if lenth == 1:
+            return 0
+        F = {}
+        F[0] = index = 0
+        while index < lenth:
+            if nums[index] + index >= lenth-1:
+                return F[index]+1
+            for i in range(nums[index]+index, index, -1):
+                F[i] = min(F[index]+1, F.get(i, float('inf')))
+            index += 1
+            
+#1 见过的一个最屌的算法思维；先从头开始找到第一个行的index1,再找能到index1的第一个行的index2.... 以此类推
+class Solution:
+    def jump(self, nums):
+        if len(nums) == 1:
+            return 0
+        for i in nums:
+            if i != 1:
+                return min(j(nums, 0, []))
+        return len(nums) - 1
+        
+        
+def j(nums, soFar, pos):  #先找第几个数能到尾巴，再看第几个数能到这个数
+    for i in range(len(nums) - 1):
+        if i == 0 and nums[i] >= len(nums) - 1: # 循环终止条件，刚好找到了尾巴就break
+            pos.append(soFar + 1)
+            break
+        elif nums[i] < len(nums) - i - 1: # 当前步走不到尾巴就下一个循环
+            continue
+        else:
+            return j(nums[:i+1], soFar + 1, pos)  # 刚好
+    return pos
+
+a = Solution()
+a.jump([2,3,1,1,4])
