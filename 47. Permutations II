@@ -1,0 +1,8 @@
+#0 想到了插入的思想这一步，但是无法用程序实现它
+#1 列表生成式
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for i in nums:
+            res = [j[:k] + [i] + j[k:] for j in res for k in range((j + [i]).index(i) + 1)]  # 这一步(j + [i]).index(i) + 1)简直绝妙，破除重复
+        return res
