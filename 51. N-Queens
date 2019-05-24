@@ -1,0 +1,25 @@
+#0 不会哦
+#1 回溯算法，核心是对角线判断法
+# diags_up, diags_down就是这个算法的核心
+class Solution:
+    def solveNQueens(self, n: int): # List[List[str]]:
+        rows, diags_up, diags_down = [True]*n, [True]*(n+n), [True]*(n+n)
+        board = [['.' for _ in range(n)] for _ in range(n)]   # board在回溯中共享一个地址
+        out = []
+        
+        def backtrack(c):  # r:row   c:column； 先列后行的判断
+            if c == n:
+                out.append([''.join(row) for row in board])
+            else:
+                for r in range(n):
+                    if rows[r]:
+                        dup, ddown = r+c, n-r+c  # r+c 右斜对角线/的值始终相等； n-r+c 左斜对角线\的值始终相等
+                        if diags_up[dup] and diags_down[ddown]:
+                            rows[r] = diags_up[dup] = diags_down[ddown] = False  # 1
+                            board[r][c] = 'Q'  # 2
+                            backtrack(c + 1)  # 如未达到要求，c是不可能等于n而增加一个输出的
+                            board[r][c] = '.'  # 2
+                            rows[r] = diags_up[dup] = diags_down[ddown] = True  # 1
+        
+        backtrack(0)
+        return out
