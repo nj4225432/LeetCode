@@ -1,0 +1,20 @@
+#0 自己搞了一波，但是判断条件太多了，失败告终
+#1 太聪明了，一定要记住区间interval 就想到 max, min ；先判断，后max min
+class Solution:
+    def insert(self, intervals, newInterval):  #顺藤摸瓜的思路,先照顾0后照顾1
+        start = newInterval[0] #这个配合max, min 用的很精妙
+        end = newInterval[1]
+        result = []
+        i = 0
+        while i < len(intervals):
+            if start <= intervals[i][1]:  # 判断标准是拿当前小的比大的，注意这个等号啊，十分关键  1.先判断
+                if end < intervals[i][0]:  # 可以用来判断当前区间最大值都小于遍历最小值的情况
+                    break
+                start = min(start, intervals[i][0]) # 2. 后max min
+                end = max(end, intervals[i][1])
+            else:
+                result.append(intervals[i])
+            i += 1
+        result.append([start, end])
+        result += intervals[i:]
+        return result
