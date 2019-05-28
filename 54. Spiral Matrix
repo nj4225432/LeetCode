@@ -1,0 +1,23 @@
+# 0 自己的方法，44ms beat 19.57%  核心思想是剥洋葱，每次一次都去掉matrix中的元素，每一次遍历matrix都不一样
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        res = []
+        index = 0
+        while matrix:  # 一共分4种情况
+            if index % 4 == 0:
+                res.extend(matrix.pop(0))
+                index += 1
+            elif index % 4 == 1:
+                for i in range(0, len(matrix)):
+                    res.append(matrix[i].pop())
+                matrix = [_ for _ in matrix if _ != []]   # 去掉列表中的空列表               
+                index += 1
+            elif index % 4 == 2:
+                res.extend(matrix.pop()[::-1])
+                index += 1
+            elif index % 4 == 3:
+                for i in range(len(matrix)-1, -1, -1):
+                    res.append(matrix[i].pop(0))
+                    matrix = [_ for _ in matrix if _ != []]    
+                index += 1      
+        return res
