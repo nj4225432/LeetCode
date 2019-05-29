@@ -46,7 +46,7 @@ class Solution:
             for j in range(top+1,bottom+1):
                 result.append(matrix[j][right])
             #Then go left
-            if(top<bottom): # 等于的时候
+            if(top<bottom): # 等于的时候。其逻辑为如果top=bottom，则遍历一次就行了
                 for j in range(right-1,left-1,-1):
                     result.append(matrix[bottom][j])
             #Then go top
@@ -54,3 +54,4 @@ class Solution:
                 for j in range(bottom-1,top,-1):
                     result.append(matrix[j][left])
             i+=1
+            
