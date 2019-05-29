@@ -22,7 +22,7 @@ class Solution:
                 index += 1      
         return res
 
-# 1 28ms方法，其实是我(我想也应该是大多数人)一开始的想法，就是按着顺序来遍历，只是要实现起来确实还是有点难度
+# 1 28ms方法，其实是我(我想也应该是大多数人)一开始的想法，就是按着顺序来遍历，只是要实现起来确实还是有点难度。要分奇偶的情况来考虑
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
         if(len(matrix)==0 or len(matrix[0])==0):
@@ -38,7 +38,7 @@ class Solution:
             left = i
             if(left>right or bottom<top):
                 break
-            result.append(matrix[top][left])  # 先吸取首点
+            result.append(matrix[top][left])  # 先吸取首点，适应奇数点
             #First go right
             for j in range(left+1,right+1):
                 result.append(matrix[top][j])
@@ -46,7 +46,7 @@ class Solution:
             for j in range(top+1,bottom+1):
                 result.append(matrix[j][right])
             #Then go left
-            if(top<bottom):
+            if(top<bottom): # 等于的时候
                 for j in range(right-1,left-1,-1):
                     result.append(matrix[bottom][j])
             #Then go top
