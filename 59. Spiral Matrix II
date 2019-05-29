@@ -1,0 +1,32 @@
+#0 32ms 98.84% 
+#这道题相当于是 Spiral Matrix 的反问题，借鉴其思想而来；Spiral Matrix是已知矩阵求数列，Spiral Matrix 2 是已知数列求矩阵，核心区别就是赋值的时候是反着来的
+class Solution:
+    def generateMatrix(self, n: int) -> List[List[int]]:
+        if n == 1:
+            return [[1]]
+        matrix = [[j for j in range(i, i+n)] for i in range(1, n*n, n)] # 这个还是很吊的
+        num = [_ for _ in range(1, n*n+1)]
+        mIndex, nIndex = 0, 0 # 一个矩阵指针，一个数列指针
+        while 1:
+            left, right, top, bottom = mIndex, n-mIndex-1, mIndex, n-mIndex-1
+            if top > bottom or left > right:
+                break
+            matrix[top][left] = num[nIndex]
+            nIndex += 1
+            for i in range(left+1, right+1):
+                matrix[top][i] = num[nIndex]
+                nIndex += 1
+            for i in range(top+1, bottom+1):
+                matrix[i][right] = num[nIndex]
+                nIndex += 1
+            if top < bottom:
+                for i in range(right-1, left-1, -1):
+                    matrix[bottom][i] = num[nIndex]
+                    nIndex += 1
+            if left < right:
+                for i in range(bottom-1, top, -1):
+                    matrix[i][left] = num[nIndex]
+                    nIndex += 1
+            mIndex += 1
+        
+        return matrix
