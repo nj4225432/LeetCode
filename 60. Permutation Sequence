@@ -1,0 +1,30 @@
+#0 32 ms, faster than 92.49%。核心思想是画树状图和阶乘，一级一级的看，在每一级所处的位置
+class Solution:
+    def getPermutation(self, n: int, k: int) -> str:
+        def factorial(x):
+            if x == 1:
+                return 1
+            return x * factorial(x-1)
+        exist = [str(i) for i in range(1, n+1)]
+        res = ''
+        for i in range(n-1, 0, -1):
+            temp = (k-1) // factorial(i)  
+            res += exist.pop(temp)             
+            k -= temp * factorial(i) 
+        return res+exist.pop()
+        
+#1 24 ms的算法，整体思路跟我一样，但是有很好的改进
+from functools import reduce
+import operator
+class Solution:
+    def getPermutation(self, n: int, k: int) -> str:
+        elements = [i for i in range(1, n+1)]
+        NN = reduce(operator.mul, elements) # n!
+        #print(NN)
+        k, result = k-1, '' # k提前减1，就可以直接在后面用取余，一劳永逸
+        #print(k)
+        while len(elements) > 0:
+            NN = NN // len(elements)  # 很聪明的方式
+            i, k = k // NN, k % NN
+            result += str(elements.pop(i))
+        return result
