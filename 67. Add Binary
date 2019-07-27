@@ -1,0 +1,4 @@
+#0 比较简单，记住int('', n)转换进制的用法就行
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        return bin(int(a, 2)+int(b, 2))[2:]
