@@ -1,0 +1,50 @@
+#0 148ms faster than 91.17% 主要思路是利用set()，先添加进去需要置0的row和column，再通过循环一行一行一列一列的置0
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        row, col = set(), set()
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                if matrix[i][j] == 0:
+                    row.add(i)
+                    col.add(j)
+        row, col = list(row), list(col)
+        for i in row:
+            matrix[i] = [0 for i in range(len(matrix[0]))]
+        for i in range(len(matrix)):
+            for j in col:
+                matrix[i][j] = 0
+
+#1 个人觉得更聪明的方法，更符合题意，占用的内存更少，具体思路是发现是0的，就把该行和列的首个置0，然后通过首个数分别来一波行列置0，最后再管首行首列
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        topleft_row = False  # 首行首列标志
+        topleft_col = False
+        for r in range(len(matrix)):
+            for c in range(len(matrix[r])):
+                if matrix[r][c] == 0: # 如果发现0，就把首行首列变为0
+                    matrix[r][0] = 0
+                    matrix[0][c] = 0
+                    if r == 0:
+                        topleft_row = True
+                    if c == 0:
+                        topleft_col = True
+        for r in range(1, len(matrix)): # 后面的只看首行首列，有0就全部变0
+            if matrix[r][0] == 0:
+                for c in range(len(matrix[r])):
+                    matrix[r][c] = 0
+        for c in range(1, len(matrix[0])):
+            if matrix[0][c] == 0:
+                for r in range(len(matrix)):
+                    matrix[r][c] = 0
+        if topleft_row:  # 开始管首行首列
+            for c in range(len(matrix[0])):
+                matrix[0][c] = 0
+        if topleft_col:
+            for r in range(len(matrix)):
+                matrix[r][0] = 0
