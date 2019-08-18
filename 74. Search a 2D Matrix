@@ -1,0 +1,46 @@
+#0 自己的方法，采用二分法寻数 80ms，beats 54.31% 。 二分法一般都用一个left right //mid，三个标签
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:  
+        if not matrix or not matrix[0]:
+            return False
+        for i in matrix:
+            if target < i[0]:
+                return False
+            elif target > i[-1]:
+                continue                    
+            else:
+                left, right = 0, len(i)-1
+                while left <= right:
+                    if target == i[left] or target == i[right]:
+                        return True
+                    mid = (left + right) // 2
+                    if target == i[mid]:
+                        return True
+                    elif target > i[mid]:
+                        left = mid
+                    else:
+                        right = mid
+                    left += 1
+                    right -= 1
+                    
+#1 个人觉得比较牛逼，虽然也是二分法，但是是把整个矩阵拉长来看，并用了一个特别巧妙的matrix[m//row][m%row]
+class Solution:
+    def searchMatrix(self, matrix, target):            
+        nr = len(matrix)
+        if nr == 0: 
+            return False
+        nc = len(matrix[0])
+        
+        l = 0
+        r = nr*nc-1
+        while l<=r:
+            m = (l+r)//2
+            val = matrix[m//nc][m%nc]  ####### 非常厉害
+            if val == target:
+                return True
+            elif val < target:
+                l = m+1
+            else:
+                r = m-1
+        
+        return False
