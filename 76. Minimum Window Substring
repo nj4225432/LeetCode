@@ -1,0 +1,27 @@
+#0 这道题的难度确实是有点大，果断放弃自己做
+#1  缜密的逻辑，太强了，真的太强了。 以defaultdict 0,-1,1 来区分
+class Solution:
+    def minWindow(self, s: str, t: str) -> str:
+        import collections
+        dic = collections.defaultdict(int) # 读取每个字符出现的次数
+        for i in t:
+            dic[i] += 1
+        miss = len(t)
+        L, R = 0, len(s) # maximun possible answer
+        left = 0
+        for index, value in enumerate(s):
+            if dic[value] > 0: # 确认找到了的步骤  
+                miss -= 1
+            dic[value] -= 1 # if freq[c] < 0, means freq[c] have duplicated chars,还有略过非数的作用
+            if miss == 0:
+                while dic[s[left]] < 0: # drop the duplicated char
+                    dic[s[left]] += 1 # reduce duplicated
+                    left += 1
+                if index-left < R-L:
+                    R, L = index, left
+                dic[s[left]] += 1 # not meet s[l]   将贴合的第一个字母去掉
+                left += 1 # shift left
+                miss += 1 # add back missing
+        if R != len(s):
+            return s[L:R+1]
+        return ''
