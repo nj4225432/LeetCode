@@ -1,0 +1,40 @@
+#0 自己想的DFS，但是总是未能成功，主要是搜索的过程list总要随着temp的变化而变化，后头看了一个解法，巧妙的list(temp)，还有一个一定要及时pop()；652ms
+class Solution:
+    def combine(self, n: int, k: int):
+        res = []
+        self.dfs(1, [], n, k, res)
+        return res
+        
+    def dfs(self, count, temp, n, k, res):
+        if len(temp) == k:
+            res.append(list(temp))
+            return
+        for i in range(count, n+1):
+            temp.append(i)
+            count += 1
+            self.dfs(count, temp, n, k, res)
+            temp.pop()
+
+#1  原来有个itertools.combinations模块可以直接实现            
+class Solution:
+    def combine(self, n: int, k: int):
+        from itertools import combinations 
+        return combinations(range(1,n+1),k)
+        
+#2 第三种方法，用的堆栈的思想stack，简直太巧妙； 我何时才能自己想出来
+class Solution:
+    def combine(self, n: int, k: int):
+        ans = []
+        stack = []
+        x = 1
+        while True:
+            l = len(stack)
+            if l == k:
+                ans.append(stack[:])
+            if l == k or x > n - k + l + 1: # 剩下的位数已经不能组成k个了
+                if not stack:
+                    return ans
+                x = stack.pop() + 1 # 牛逼啊
+            else:
+                stack.append(x)
+                x += 1
