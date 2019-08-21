@@ -1,0 +1,21 @@
+#0 自己最喜欢的dfs，两次搜索，搞是搞出来了 452ms，beats 5.32% 哈哈哈哈
+class Solution:
+    def subsetsWithDup(self, nums):
+        res = []
+        self.dfs(0, [], nums, res)
+        res.append([])
+        return res
+        
+    def dfs(self, index, temp, nums, res):
+        if index == len(nums):
+            return
+        for i in range(index, len(nums)):
+            temp.append(nums[i])
+            if sorted(temp) not in res:
+                res.append(sorted(temp[:]))
+            index += 1
+            self.dfs(index, temp, nums, res)
+            temp.pop()
+            self.dfs(index, temp, nums, res)  # 多余的
+  
+  #1 速度很快的dfs，原来我多搜索了一行。。。。
