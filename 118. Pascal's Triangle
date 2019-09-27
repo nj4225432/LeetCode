@@ -1,0 +1,14 @@
+#0 自己的算法
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        i, res = 1, []
+        while i <= numRows:
+            temp = []
+            for j in range(i):
+                if j == 0 or j == i-1:
+                    temp.append(1)
+                else:
+                    temp.append(res[i-2][j]+res[i-2][j-1])
+            res.append(temp)
+            i += 1
+        return res
